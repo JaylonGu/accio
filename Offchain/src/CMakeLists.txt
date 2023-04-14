@@ -1,0 +1,5 @@
+find_library(TOMCRYPT tomcrypt HINTS /usr/local/lib)
+find_library(MCLBN mclbn256 HINTS /usr/local/lib)
+find_library(SECP secp256k1 HINTS /usr/loca/lib)
+add_executable(main main.c util.c payee.c tumbler.c payer.c)
+target_link_libraries(main ${TOMCRYPT} ${MCLBN} ${SECP})
