@@ -158,8 +158,8 @@ void parseMessage(const char* msg, mclBnG1 *m){
     int idx = find_hash("keccak256");
     unsigned char msg_hash[MAXBLOCKSIZE]={0};
     unsigned long len = sizeof(msg_hash);
-    hash_memory(idx, msg, strlen(msg), msg_hash, &len);
-
+    hash_memory(idx, msg, 20, msg_hash, &len);
+    // print_hex(msg_hash,32);
     unsigned char mc[64];
     bytesToHexString(msg_hash, mc, 32);
     for(int i = 32; i<64 ; ++i){

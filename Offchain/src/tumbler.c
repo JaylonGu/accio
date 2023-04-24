@@ -31,7 +31,7 @@ int updateConfirm(mclBnFr *bal, mclBnFr *amt, commit_t cm, secp256k1_ecdsa_recov
     if(!mclBnFr_isEqual(&diff, bal) || mclBnFr_isNegative(bal) || mclBnFr_isNegative(amt) || !cVf(cm, sig_hat, tumblerVk) ) return -1;
 
     char buf[33]; 
-    uint8_t *msg = malloc(32*6);
+    uint8_t *msg = malloc(32*7);
     size_t length;
     length = mclBnFr_serialize(buf, 33, bal);
     hexReverse(buf, 32);
@@ -55,11 +55,13 @@ int updateConfirm(mclBnFr *bal, mclBnFr *amt, commit_t cm, secp256k1_ecdsa_recov
     length = mclBnFp_serialize(buf, 33, &(c1n.y));
     hexReverse(buf, 32);
     memcpy(msg+32*5, buf, 32);
+    memset(msg+32*6, 0, 12);
+    memcpy(msg+32*6+12, id_0, 20);
 
     int idx = find_hash("keccak256");
     unsigned char msg_hash[MAXBLOCKSIZE];
     unsigned long len = sizeof(msg_hash);
-    int err = hash_memory(idx, msg, 32*6, msg_hash, &len);
+    int err = hash_memory(idx, msg, 32*7, msg_hash, &len);
     
     // char prefix[29]= "\031Ethereum Signed Message:\n32";
     // char msgandprefix[60];

@@ -72,14 +72,14 @@ contract Hub {
 
    function verify(ST memory st) internal view returns (bool){
       if(_types == 0){
-         bytes memory message = abi.encode(st.bal, st.v, st.cm.c0.X,st.cm.c0.Y,st.cm.c1.X,st.cm.c1.Y);
+         bytes memory message = abi.encode(st.bal, st.v, st.cm.c0.X,st.cm.c0.Y,st.cm.c1.X,st.cm.c1.Y,address(this));
          bool b2 = sigverify(st.sig, message);
          Pairing.Commitment memory cm_new = Pairing.cHomo(st.cm, st.v);
          bool b3 = Pairing.cVf(cm_new, st.sigma_hat, _vk);
          return st.bal>=0 && st.bal<= address(this).balance && st.v>=0 && b2 && b3;
       }else{
          uint bal = address(this).balance - st.bal;
-         Curve.G1Point memory p = Curve.g1mul(Pairing.G(), ((( uint256(keccak256("1")) >> 128 ) << 131) >> 3)+bal); 
+         Curve.G1Point memory p = Curve.g1mul(Pairing.G(), ((( uint256(keccak256(  abi.encodePacked(address(this))  )) >> 128 ) << 131) >> 3)+bal); 
          bool b1 = Pairing.cOpen(st.cm, p, st.r);
          bool b2 = Pairing.cVf(st.cm, st.sigma_hat, _vk);
          return st.bal>=0 && st.bal<= address(this).balance && b1 && b2;      

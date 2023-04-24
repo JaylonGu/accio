@@ -10,7 +10,7 @@
 // 设置tumbler的余额 bal_t
 // 把签名和承诺随机化，得到新的 cm，sig_hat_1和r'，以r+r'作为状态r
 void checkInitial(commit_t cm, mclBnFr *r, signature_t sigma){
-    if(!cOpen(cm, "1", r) || !cVf(cm, sigma, tumblerVk)) return;  // id = "1"
+    if(!cOpen(cm, id_1, r) || !cVf(cm, sigma, tumblerVk)) return;  
     // printf("CheckInitial is successful.\n");
     mclBnFr r_;
 

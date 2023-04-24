@@ -23,7 +23,7 @@ int update(const char* amt_str, commit_t cm, signature_t sigma){
     // 对交易后余额bal_s_tmp, 交易金额amt, cm0 进行签名
     // 发送 上述消息，签名，sig_hat_0 给 tumbler
     char buf[32]; 
-    uint8_t *msg = malloc(32*4);
+    uint8_t *msg = malloc(32*7);
     size_t length;
     length = mclBnFr_serialize(buf, 32, &bal_s_tmp);
     hexReverse(buf, 32);
@@ -47,11 +47,13 @@ int update(const char* amt_str, commit_t cm, signature_t sigma){
     length = mclBnFp_serialize(buf, 33, &(c1n.y));
     hexReverse(buf, 32);
     memcpy(msg+32*5, buf, 32);
+    memset(msg+32*6, 0, 12);
+    memcpy(msg+32*6+12, id_0, 20);
 
     int idx = find_hash("keccak256");
     unsigned char msg_hash[MAXBLOCKSIZE];
     unsigned long len = sizeof(msg_hash);
-    int err = hash_memory(idx, msg, 32*6, msg_hash, &len);
+    int err = hash_memory(idx, msg, 32*7, msg_hash, &len);
 
     // printf("original hash:");
     // print_hex(msg_hash, 32);

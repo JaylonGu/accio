@@ -29,6 +29,7 @@ void hextoString(const unsigned char* hex, unsigned char *str, int hexlen){
     }
     // printf("\n");
 }
+char id_0[20], id_1[20];
 
 int main(int argc, char const *argv[])
 {
@@ -36,9 +37,31 @@ int main(int argc, char const *argv[])
     // long long total_time_pay1, total_time_pay2, total_time_update1, total_time_update2;
     init();
 
+    // 这里的id为合约地址
+    char id_1_str[43], id_0_str[43];
+    // printf("Input type 0 contract address (start with 0x): \n");
+    scanf("%s", id_0_str);
+    for (int i = 0; i < 40; i += 2)
+    {
+        char slice[3]={0};
+        slice[0] = id_0_str[i+2] ;
+        slice[1] = id_0_str[i+3];
+        sscanf(slice, "%hhx", id_0 + i / 2);
+    }
+    // printf("Input type 1 contract address (start with 0x): \n");
+    scanf("%s", id_1_str);
+    for (int i = 0; i < 40; i += 2)
+    {
+        char slice[3]={0};
+        slice[0] = id_1_str[i+2] ;
+        slice[1] = id_1_str[i+3];
+        sscanf(slice, "%hhx", id_1 + i / 2);
+    }
+
     //tumbler send message to payee
     start_time = ttimer();
-    initialize("1");
+
+    initialize(id_1);
     stop_time = ttimer();
     total_time = stop_time - start_time;
     // printf("Initialize time: %.5f sec\n\n", total_time / CLOCK_PRECISION);
@@ -144,7 +167,7 @@ int main(int argc, char const *argv[])
     // printf("[\"%s\",[[\"%s\",\"%s\"],[\"%s\",\"%s\"]],[[\"%s\",\"%s\"],[\"%s\",\"%s\"],[[\"%s\",\"%s\"],[\"%s\",\"%s\"]],[\"%s\",\"%s\"]],\"%s\",\"0\",\"%s\"]\n", bal_s_str,cm_0_c0_x, cm_0_c0_y, cm_0_c1_x, cm_0_c1_y, sig_0_z_x, sig_0_z_y, sig_0_s_x, sig_0_s_y, sig_0_sh_x2, sig_0_sh_x1, sig_0_sh_y2, sig_0_sh_y1, sig_0_t_x, sig_0_t_y, amt_str, sig_str);
 
     // print_hex(sig_0_cpt, 65);
-    char bal_t_str[257];
+    char bal_t_str[257]={0};
     char c1_c0[1000], c1_c1[1000];
     char sig_1_z[1000], sig_1_s[1000], sig_1_sh[1000], sig_1_t[1000];
     mclBnFr_getStr(bal_t_str, 257, &bal_t, 10);

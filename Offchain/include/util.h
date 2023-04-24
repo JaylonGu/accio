@@ -34,6 +34,7 @@ extern secp256k1_pubkey pubkey;
 extern commit_t cm_0, cm_0_old, cm_1;
 extern signature_t sig_hat_0, sig_hat_1; 
 
+extern char id_0[20], id_1[20];
 
 void init();
 void hexReverse(char* src, size_t length);
