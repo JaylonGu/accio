@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/main.dir/main.c.o CMakeFiles/main.dir/util.c.o CMakeFiles/main.dir/payee.c.o CMakeFiles/main.dir/tumbler.c.o CMakeFiles/main.dir/payer.c.o -o /home/jaylon/Workspaces/Blockchain/Accio/Offchain/bin/main  -Wl,-rpath,/usr/local/lib /usr/local/lib/libtomcrypt.so /usr/local/lib/libmclbn256.so /usr/local/lib/libsecp256k1.so 
